@@ -18,7 +18,8 @@
 
 - **Asynchronous Execution**: Utilizes Python's `threading` module to isolate the GUI mainloop from the heavy-duty clicking loops, preventing interface freezing.
 - **Modern Dark UI**: A sleek, distraction-free interface built using `customtkinter` with intuitive visual feedback for active states.
-- **Global Event Listeners**: Powered by `pynput` for non-blocking global hotkey detection, allowing operation toggles while the application is minimized or unfocused.
+- **Always on Top Window**: Easily toggleable 'Stick' mode to keep the application in focus over other windows.
+- **Advanced Global Hotkeys**: Utilizes the `keyboard` module for OS-level keystroke interception and suppression (e.g., F6 won't trigger browser shortcuts), allowing reliable background toggles.
 - **Customizable Operations**:
   - Configurable click intervals down to the millisecond.
   - Multi-button support (Left, Right, Middle).
@@ -31,7 +32,7 @@
 
 - **Core Logic**: Python 3
 - **User Interface**: [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
-- **Input Simulation & Monitoring**: `pynput`
+- **Input Simulation & Hotkey Hooking**: `pynput` (Mouse simulation) and `keyboard` (Hotkey suppression)
 - **Concurrency**: Native Python `threading`
 - **Build System**: PyInstaller (via `build.bat`)
 
@@ -79,7 +80,9 @@ For deployment or distribution without requiring a Python environment, you can c
    - Enter the desired delay between clicks in the **Interval (ms)** field.
    - Select the target **Mouse Button** from the dropdown.
    - Choose your preferred **Activation Key** (e.g., F6).
-3. **Toggle Mode** (Optional): Enable *Hold Mode* if you need the button to remain pressed continuously rather than clicked repeatedly.
+3. **Toggle Mode** (Optional): 
+   - Enable *Hold Mode* if you need the button to remain pressed continuously rather than clicked repeatedly.
+   - Toggle *Always on Top* to keep the window floating above other applications.
 4. **Start**: Press your selected Activation Key globally, or click the **Start** button in the UI. 
 5. **Stop**: Press the Activation Key again, or click **Stop** to halt automation instantly.
 

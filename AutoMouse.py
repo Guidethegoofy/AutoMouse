@@ -1,10 +1,22 @@
 import threading
 import time
+import os
+import sys
+import tkinter as tk
+from PIL import Image
 import customtkinter as ctk
 from tkinter import messagebox
-from pynput import mouse, keyboard
+from pynput import mouse
 from pynput.mouse import Button, Controller as MouseController
-from pynput.keyboard import Key, KeyCode, Listener as KeyListener
+import keyboard
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 # ── Appearance Setup ──
 ctk.set_appearance_mode("Dark")
@@ -15,7 +27,7 @@ mouse_ctrl = MouseController()
 running = False
 click_thread = None
 stop_event = threading.Event()
-current_hotkey = Key.f6
+current_hotkey = "f6"
 
 # ── Core Click Loop ──
 def click_loop(interval_ms, mode_hold, button_type, stop_evt):
@@ -39,15 +51,30 @@ class AutoMouseApp(ctk.CTk):
         super().__init__()
 
         self.title("AutoMouse Pro")
-        self.geometry("380x520")
+        self.geometry("380x640")
         self.resizable(False, False)
+        self.attributes("-topmost", True)
+
+        # Load Logo Image
+        try:
+            icon_path = resource_path("AI_Lol.png")
+            # Set Window Icon
+            img_icon = tk.PhotoImage(file=icon_path)
+            self.iconphoto(False, img_icon)
+            
+            # Show Logo in UI
+            my_image = ctk.CTkImage(light_image=Image.open(icon_path), dark_image=Image.open(icon_path), size=(60, 60))
+            self.logo_label = ctk.CTkLabel(self, text="", image=my_image)
+            self.logo_label.pack(pady=(20, 0))
+        except Exception as e:
+            pass
 
         # Title
-        self.title_label = ctk.CTkLabel(self, text="🖱 AutoMouse Pro", font=ctk.CTkFont(size=24, weight="bold"))
-        self.title_label.pack(pady=(25, 5))
+        self.title_label = ctk.CTkLabel(self, text="AutoMouse Pro", font=ctk.CTkFont(size=24, weight="bold"))
+        self.title_label.pack(pady=(5, 0))
 
         self.subtitle_label = ctk.CTkLabel(self, text="Strategic Automation Utility", font=ctk.CTkFont(size=12, slant="italic"), text_color="gray")
-        self.subtitle_label.pack(pady=(0, 20))
+        self.subtitle_label.pack(pady=(0, 15))
 
         # Main Card / Panel
         self.card = ctk.CTkFrame(self, corner_radius=15)
@@ -86,37 +113,42 @@ class AutoMouseApp(ctk.CTk):
 
         # Hold Mode Switch
         self.hold_frame = ctk.CTkFrame(self.card, fg_color="transparent")
-        self.hold_frame.pack(fill="x", padx=20, pady=(10, 20))
+        self.hold_frame.pack(fill="x", padx=20, pady=10)
         ctk.CTkLabel(self.hold_frame, text="Hold Mode:", font=ctk.CTkFont(size=14)).pack(side="left")
         self.hold_var = ctk.BooleanVar(value=False)
         self.hold_switch = ctk.CTkSwitch(self.hold_frame, text="", variable=self.hold_var)
         self.hold_switch.pack(side="right")
+
+        # Always on Top Switch
+        self.topmost_frame = ctk.CTkFrame(self.card, fg_color="transparent")
+        self.topmost_frame.pack(fill="x", padx=20, pady=(10, 20))
+        ctk.CTkLabel(self.topmost_frame, text="Always on Top:", font=ctk.CTkFont(size=14)).pack(side="left")
+        self.topmost_var = ctk.BooleanVar(value=True)
+        self.topmost_switch = ctk.CTkSwitch(self.topmost_frame, text="", variable=self.topmost_var, command=self.toggle_topmost)
+        self.topmost_switch.pack(side="right")
 
         # Primary Toggle Button
         self.toggle_btn = ctk.CTkButton(self, text="▶  Start  (F6)", font=ctk.CTkFont(size=16, weight="bold"), height=50, corner_radius=10, command=self.toggle)
         self.toggle_btn.pack(padx=20, pady=(10, 20), fill="x")
 
         # Global Hotkey Listener
-        self.key_listener = KeyListener(on_press=self.on_key_press)
-        self.key_listener.daemon = True
-        self.key_listener.start()
+        keyboard.add_hotkey(current_hotkey, self._on_hotkey, suppress=True)
+
+    def _on_hotkey(self):
+        self.after(0, self.toggle)
+
+    def toggle_topmost(self):
+        self.attributes("-topmost", self.topmost_var.get())
 
     def update_hotkey(self, selection):
         global current_hotkey
-        mapping = {
-            "F6": Key.f6, "F7": Key.f7, "F8": Key.f8, "F9": Key.f9,
-            "X": KeyCode.from_char('x'), "Z": KeyCode.from_char('z')
-        }
-        current_hotkey = mapping.get(selection, Key.f6)
-        self.toggle_btn.configure(text=f"{'⏹  Stop' if running else '▶  Start'}  ({selection})")
-
-    def on_key_press(self, key):
-        global current_hotkey
         try:
-            if key == current_hotkey:
-                self.after(0, self.toggle)
+            keyboard.remove_hotkey(current_hotkey)
         except Exception:
             pass
+        current_hotkey = selection.lower()
+        keyboard.add_hotkey(current_hotkey, self._on_hotkey, suppress=True)
+        self.toggle_btn.configure(text=f"{'⏹  Stop' if running else '▶  Start'}  ({selection})")
 
     def toggle(self):
         global running, click_thread, stop_event
