@@ -4,8 +4,8 @@
   
   [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
   [![GUI](https://img.shields.io/badge/GUI-CustomTkinter-success.svg)](https://customtkinter.tomschimansky.com/)
-  [![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)]()
-  [![License](https://img.shields.io/badge/License-MIT-green.svg)]()
+  [![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://github.com/Guidethegoofy/AutoMouse/releases/tag/v1.0.0)
+  [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Guidethegoofy/AutoMouse/blob/main/LICENSE)
 </div>
 
 <hr>
