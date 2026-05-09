@@ -51,30 +51,23 @@ class AutoMouseApp(ctk.CTk):
         super().__init__()
 
         self.title("AutoMouse Pro")
-        self.geometry("380x640")
+        self.geometry("380x560")
         self.resizable(False, False)
         self.attributes("-topmost", True)
 
-        # Load Logo Image
+        # Load Window Icon
         try:
-            icon_path = resource_path("AI_Lol.png")
-            # Set Window Icon
-            img_icon = tk.PhotoImage(file=icon_path)
-            self.iconphoto(False, img_icon)
-            
-            # Show Logo in UI
-            my_image = ctk.CTkImage(light_image=Image.open(icon_path), dark_image=Image.open(icon_path), size=(60, 60))
-            self.logo_label = ctk.CTkLabel(self, text="", image=my_image)
-            self.logo_label.pack(pady=(20, 0))
-        except Exception as e:
+            icon_path = resource_path("AI_Lol.ico")
+            self.iconbitmap(icon_path)
+        except Exception:
             pass
 
         # Title
-        self.title_label = ctk.CTkLabel(self, text="AutoMouse Pro", font=ctk.CTkFont(size=24, weight="bold"))
-        self.title_label.pack(pady=(5, 0))
+        self.title_label = ctk.CTkLabel(self, text="🖱 AutoMouse Pro", font=ctk.CTkFont(size=24, weight="bold"))
+        self.title_label.pack(pady=(25, 5))
 
         self.subtitle_label = ctk.CTkLabel(self, text="Strategic Automation Utility", font=ctk.CTkFont(size=12, slant="italic"), text_color="gray")
-        self.subtitle_label.pack(pady=(0, 15))
+        self.subtitle_label.pack(pady=(0, 20))
 
         # Main Card / Panel
         self.card = ctk.CTkFrame(self, corner_radius=15)
