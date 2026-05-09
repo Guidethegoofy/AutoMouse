@@ -2,4 +2,3 @@ pynput
 customtkinter
 pyinstaller
 keyboard
-pillow

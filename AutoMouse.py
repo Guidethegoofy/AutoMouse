@@ -1,22 +1,12 @@
 import threading
 import time
-import os
-import sys
-import tkinter as tk
-from PIL import Image
 import customtkinter as ctk
 from tkinter import messagebox
 from pynput import mouse
 from pynput.mouse import Button, Controller as MouseController
 import keyboard
 
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
+
 
 # ── Appearance Setup ──
 ctk.set_appearance_mode("Dark")
@@ -55,12 +45,7 @@ class AutoMouseApp(ctk.CTk):
         self.resizable(False, False)
         self.attributes("-topmost", True)
 
-        # Load Window Icon
-        try:
-            icon_path = resource_path("AI_Lol.ico")
-            self.iconbitmap(icon_path)
-        except Exception:
-            pass
+
 
         # Title
         self.title_label = ctk.CTkLabel(self, text="🖱 AutoMouse Pro", font=ctk.CTkFont(size=24, weight="bold"))

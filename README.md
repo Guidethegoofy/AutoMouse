@@ -18,8 +18,8 @@
 
 - **Asynchronous Execution**: Utilizes Python's `threading` module to isolate the GUI mainloop from the heavy-duty clicking loops, preventing interface freezing.
 - **Modern Dark UI**: A sleek, distraction-free interface built using `customtkinter` with intuitive visual feedback for active states.
-- **Always on Top Window**: Easily toggleable 'Stick' mode to keep the application in focus over other windows.
-- **Advanced Global Hotkeys**: Utilizes the `keyboard` module for OS-level keystroke interception and suppression (e.g., F6 won't trigger browser shortcuts), allowing reliable background toggles.
+- **Always on Top Window**: Easily toggleable mode to keep the application in focus over other windows.
+- **Global Hotkeys**: Robust background toggling support (e.g., F6).
 - **Customizable Operations**:
   - Configurable click intervals down to the millisecond.
   - Multi-button support (Left, Right, Middle).
@@ -32,7 +32,7 @@
 
 - **Core Logic**: Python 3
 - **User Interface**: [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
-- **Input Simulation & Hotkey Hooking**: `pynput` (Mouse simulation) and `keyboard` (Hotkey suppression)
+- **Input Simulation & Hotkey Hooking**: `pynput` (Mouse) and `keyboard` (Hotkey suppression)
 - **Concurrency**: Native Python `threading`
 - **Build System**: PyInstaller (via `build.bat`)
 
