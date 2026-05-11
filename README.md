@@ -61,11 +61,12 @@ The application includes several safety measures:
 
 ## 📥 Download & Install (For Regular Users)
 
-If you just want to use the application without dealing with Python code, you can download the ready-to-run `.exe` file.
+If you just want to use the application without dealing with Python code, you can download the ready-to-run file.
 
 1. Go to the [Latest Release Page](https://github.com/Guidethegoofy/AutoMouse/releases/latest).
-2. Download **`AutoMouse.exe`** under the "Assets" section.
-3. Double-click the file to run it. No installation or Python required!
+2. Download **`AutoMouse.zip`** under the "Assets" section.
+3. Extract (unzip) the file.
+4. Double-click **`AutoMouse.exe`** inside the folder to run it. No installation or Python required!
 
 ---
 
